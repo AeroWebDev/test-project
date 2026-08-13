@@ -1,7 +1,7 @@
 import Link from "next/link";
-import GameSearch from "../components/GameSearch";
-import GameCard from "../components/GameCard";
-import { getTrendingGames, getAllGames } from "../lib/supabase";
+import GameSearch from "../src/components/GameSearch";
+import GameCard from "../src/components/GameCard";
+import { getTrendingGames, getAllGames } from "../src/lib/supabase";
 import { FaShieldAlt, FaBolt, FaSyncAlt } from "react-icons/fa";
 
 export const revalidate = 60; // Revalidate static data every 60 seconds

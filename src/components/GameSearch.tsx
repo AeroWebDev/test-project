@@ -3,29 +3,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { searchGames, getTotalActiveCodesCount, getAllGames } from "../lib/supabase";
+import { searchGames } from "../lib/supabase";
+import { FaStar, FaGamepad, FaBolt, FaHammer, FaFrownOpen, FaSearch, FaTimes, FaScroll } from "react-icons/fa";
 
 export default function GameSearch() {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [totalGames, setTotalGames] = useState<number>(6);
-  const [totalActive, setTotalActive] = useState<number>(20);
   const wrapRef = useRef<HTMLDivElement>(null);
-
-  // Load stats
-  useEffect(() => {
-    async function loadStats() {
-      const [games, activeCount] = await Promise.all([
-        getAllGames(),
-        getTotalActiveCodesCount(),
-      ]);
-      setTotalGames(games.length);
-      setTotalActive(activeCount);
-    }
-    loadStats();
-  }, []);
 
   // Search when query changes
   useEffect(() => {
@@ -72,25 +58,8 @@ export default function GameSearch() {
 
   return (
     <section className="game-search">
-      {/* Stats row */}
-      <div className="stats-row">
-        <div className="stat-chip">
-          <span className="stat-dot"></span>
-          <span><strong>{totalGames}</strong> Games Tracked</span>
-        </div>
-        <div className="stat-chip">
-          <span className="stat-dot green"></span>
-          <span><strong>{totalActive}+</strong> Active Codes</span>
-        </div>
-        <div className="stat-chip">
-          <span className="stat-dot amber"></span>
-          <span>Updated <strong>Daily</strong></span>
-        </div>
-      </div>
-
       {/* Main heading */}
       <h1 className="hero-heading">
-        <span className="hero-emoji" role="img" aria-label="Ninja">🥷</span>
         <div className="hero-text">
           Find Your Game Code.
           <br />
@@ -105,10 +74,7 @@ export default function GameSearch() {
       {/* Search input */}
       <div className="search-outer" ref={wrapRef}>
         <div className={`search-wrap ${focused ? "focused" : ""}`}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-            <circle cx="11" cy="11" r="7" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
+          <FaSearch aria-hidden="true" />
           <input
             id="searchInput"
             type="text"
@@ -124,7 +90,7 @@ export default function GameSearch() {
           />
           {query && (
             <button className="clear-search" onClick={() => setQuery("")} title="Clear" aria-label="Clear search">
-              ✕
+              <FaTimes />
             </button>
           )}
           <Link href="/games" className="browse-all-btn">
@@ -163,7 +129,7 @@ export default function GameSearch() {
               </>
             ) : (
               <div className="no-results">
-                <span>😕</span> No games found for &ldquo;{query}&rdquo;
+                <FaFrownOpen /> No games found for &ldquo;{query}&rdquo;
               </div>
             )}
           </div>
@@ -173,11 +139,11 @@ export default function GameSearch() {
       {/* Quick category pills */}
       <div className="quick-categories">
         <span>Browse by:</span>
-        <Link href="/games?cat=Anime" className="chip">🌸 Anime</Link>
-        <Link href="/games?cat=Simulator" className="chip">🎮 Simulators</Link>
-        <Link href="/games?cat=Action" className="chip">⚔️ Action</Link>
-        <Link href="/games?cat=Tower Defense" className="chip">🏯 Tower Defense</Link>
-        <Link href="/games?cat=RPG" className="chip">🗡️ RPG</Link>
+        <Link href="/games?cat=Anime" className="chip"><FaStar /> Anime</Link>
+        <Link href="/games?cat=Simulator" className="chip"><FaGamepad /> Simulators</Link>
+        <Link href="/games?cat=Action" className="chip"><FaBolt /> Action</Link>
+        <Link href="/games?cat=Tower Defense" className="chip"><FaHammer /> Tower Defense</Link>
+        <Link href="/games?cat=RPG" className="chip"><FaScroll /> RPG</Link>
       </div>
     </section>
   );

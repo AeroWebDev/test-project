@@ -5,7 +5,6 @@ import "./globals.css";
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
 import { ToastProvider } from "../src/components/Toast";
-import ProgressBarProvider from "../src/components/ProgressBarProvider";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -46,7 +45,7 @@ export const metadata: Metadata = {
     description: "Daily-verified Roblox game codes with 1-tap instant copy.",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&auto=format&fit=crop&q=80",
+        url: "/content.png",
         width: 1200,
         height: 630,
         alt: "RoBoCodes Roblox Game Redeem Codes",
@@ -80,13 +79,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ProgressBarProvider>
           <ToastProvider>
             <Header />
             {children}
             <Footer />
           </ToastProvider>
-        </ProgressBarProvider>
       </body>
     </html>
   );

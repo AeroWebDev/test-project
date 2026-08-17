@@ -115,7 +115,20 @@ export async function getAllGames(): Promise<Game[]> {
       .order("is_trending", { ascending: false });
 
     if (!error && data && data.length > 0) {
-      return data;
+      // Fetch codes for all games in parallel
+      const gamesWithCodes = await Promise.all(
+        data.map(async (game) => {
+          const { data: codesData } = await supabase
+            .from("codes")
+            .select("*")
+            .eq("game_id", game.id);
+          return {
+            ...game,
+            codes: codesData ?? [],
+          };
+        })
+      );
+      return gamesWithCodes;
     }
   } catch (err) {
     console.warn("Supabase fetch fallback:", err);
@@ -133,7 +146,20 @@ export async function getTrendingGames(): Promise<Game[]> {
       .eq("is_trending", true);
 
     if (!error && data && data.length > 0) {
-      return data;
+      // Fetch codes for all games in parallel
+      const gamesWithCodes = await Promise.all(
+        data.map(async (game) => {
+          const { data: codesData } = await supabase
+            .from("codes")
+            .select("*")
+            .eq("game_id", game.id);
+          return {
+            ...game,
+            codes: codesData ?? [],
+          };
+        })
+      );
+      return gamesWithCodes;
     }
   } catch (err) {
     console.warn("Supabase fetch fallback:", err);
@@ -152,7 +178,20 @@ export async function getGamesByCategory(category: string): Promise<Game[]> {
 
     const { data, error } = await query.order("is_trending", { ascending: false });
     if (!error && data && data.length > 0) {
-      return data;
+      // Fetch codes for all games in parallel
+      const gamesWithCodes = await Promise.all(
+        data.map(async (game) => {
+          const { data: codesData } = await supabase
+            .from("codes")
+            .select("*")
+            .eq("game_id", game.id);
+          return {
+            ...game,
+            codes: codesData ?? [],
+          };
+        })
+      );
+      return gamesWithCodes;
     }
   } catch (err) {
     console.warn("Supabase fetch fallback for category:", category, err);

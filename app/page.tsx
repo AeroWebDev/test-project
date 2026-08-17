@@ -3,6 +3,7 @@ import GameSearch from "../src/components/GameSearch";
 import GameCard from "../src/components/GameCard";
 import { getTrendingGames, getAllGames } from "../src/lib/supabase";
 import { FaShieldAlt, FaBolt, FaSyncAlt } from "react-icons/fa";
+import Script from "next/script";
 
 export const revalidate = 60; // Revalidate static data every 60 seconds
 
@@ -12,7 +13,7 @@ export default async function HomePage() {
     getAllGames(),
   ]);
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robocodes.net";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robcodes.vercel.app";
 
   // WebSite Schema JSON-LD
   const websiteSchema = {
@@ -27,6 +28,14 @@ export default async function HomePage() {
       "query-input": "required name=search_term_string"
     }
   };
+
+  // Add this inside the <html> element, typically after your metadata:
+  <Script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322508130871793"
+    crossOrigin="anonymous"
+    strategy="afterInteractive"
+  />
 
   return (
     <main className="main-content">

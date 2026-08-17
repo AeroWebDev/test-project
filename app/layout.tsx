@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  other: {
+    "google-adsense-account": "ca-pub-8322508130871793",
+  },
   title: {
     default: "RoBoCodes | Free Roblox Game Codes & Rewards 2026",
     template: "%s | RoBoCodes",

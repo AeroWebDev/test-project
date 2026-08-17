@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "../src/components/Header";
@@ -71,11 +70,10 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${outfit.variable} ${inter.variable}`}>
       <head>
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322508130871793"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
       </head>
       <body>
@@ -84,12 +82,6 @@ export default function RootLayout({
             {children}
             <Footer />
           </ToastProvider>
-          <Script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322508130871793"
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
-          />
       </body>
     </html>
   );

@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     description: "Daily-verified Roblox game codes with 1-tap instant copy.",
     images: [
       {
-        url: "/content.png",
+        url: "/public/content.png",
         width: 1200,
         height: 630,
         alt: "RoBoCodes Roblox Game Redeem Codes",

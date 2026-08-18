@@ -18,6 +18,16 @@ const initialFormData: FormData = {
 export default function ContactPage() {
   const { showToast } = useToast();
 
+  const developerLinks = [
+    { label: "Facebook", href: "https://facebook.com/robcodes.dev" },
+    { label: "WhatsApp", href: "https://wa.me/15551234567?text=Hi%20RoBcodes%20team" },
+  ];
+
+  const supportLinks = [
+    { label: "Facebook", href: "https://facebook.com/robcodes.support" },
+    { label: "Discord Server", href: "https://discord.gg/robcodes" },
+  ];
+
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -78,7 +88,7 @@ export default function ContactPage() {
         <span className="contact-eyebrow">GET IN TOUCH</span>
 
         <h1>
-          Contact the <span className="hl">RoBoCodes</span> Team
+          Contact the <span className="hl">RoBcodes</span> Team
         </h1>
 
         <p className="lead">
@@ -90,21 +100,56 @@ export default function ContactPage() {
       {submitted ? (
         <div className="contact-success">
           <div className="success-icon">✓</div>
+          <span className="success-badge">Message sent successfully</span>
 
-          <h3>Message received!</h3>
+          <h3>Your message has been sent</h3>
 
           <p>
-            Thanks for reaching out. Our team will review your message
-            shortly.
+            Thanks for reaching out. We have received your message and our team will
+            review it shortly.
           </p>
 
-          <button
-            type="button"
-            className="game-card-btn"
-            onClick={() => setSubmitted(false)}
-          >
-            Send another message
-          </button>
+          <div className="success-actions">
+            <button
+              type="button"
+              className="game-card-btn"
+              onClick={() => setSubmitted(false)}
+            >
+              Send another message
+            </button>
+
+            <a href="/" className="secondary-link">
+              Back to homepage
+            </a>
+          </div>
+
+          <div className="contact-socials">
+            <div className="social-group">
+              <h4>Developer</h4>
+              <ul className="social-list">
+                {developerLinks.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} target="_blank" rel="noreferrer">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="social-group">
+              <h4>Support Team</h4>
+              <ul className="social-list">
+                {supportLinks.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} target="_blank" rel="noreferrer">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       ) : (
         <form

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "RoBoCodes Privacy Policy.",
+  description: "RoBcodes Privacy Policy.",
 };
 
 export default function PrivacyPage() {
@@ -13,7 +13,7 @@ export default function PrivacyPage() {
 
       <h2>1. Information We Collect</h2>
       <p>
-        RoBoCodes does not require account registration or any personal information to browse
+        RoBcodes does not require account registration or any personal information to browse
         or copy game codes. We may automatically collect non-personal analytics data such as
         browser type, device type, approximate location (derived from IP address), and pages
         viewed, to help us understand how the Site is used and to improve performance.
@@ -38,7 +38,7 @@ export default function PrivacyPage() {
 
       <h2>4. Children&apos;s Privacy</h2>
       <p>
-        RoBoCodes does not knowingly collect personal information from children. Because many
+        RoBcodes does not knowingly collect personal information from children. Because many
         visitors to gaming sites like this one may be under 13, we do not ask for names, email
         addresses, or any other personal details anywhere on the Site. If we become aware that
         personal information has been collected from a child without appropriate consent, we

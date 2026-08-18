@@ -3,9 +3,8 @@ import GameSearch from "../src/components/GameSearch";
 import GameCard from "../src/components/GameCard";
 import { getTrendingGames, getAllGames } from "../src/lib/supabase";
 import { FaShieldAlt, FaBolt, FaSyncAlt } from "react-icons/fa";
-import Script from "next/script";
 
-export const revalidate = 60; // Revalidate static data every 60 seconds
+export const revalidate = 60;
 
 export default async function HomePage() {
   const [trendingGames, allGames] = await Promise.all([
@@ -13,67 +12,60 @@ export default async function HomePage() {
     getAllGames(),
   ]);
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robcodes.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robcodes.net";
 
-  // WebSite Schema JSON-LD
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "RoBoCodes",
-    "url": siteUrl,
-    "description": "Daily verified Roblox game redeem codes for Blox Fruits, Blade Ball, King Legacy, and more.",
-    "potentialAction": {
+    name: "RoBcodes",
+    url: siteUrl,
+    description: "Daily verified Roblox game redeem codes for Blox Fruits, Blade Ball, King Legacy, and more.",
+    potentialAction: {
       "@type": "SearchAction",
-      "target": `${siteUrl}/games?q={search_term_string}`,
-      "query-input": "required name=search_term_string"
-    }
+      target: `${siteUrl}/games?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
   };
-
-  // Add this inside the <html> element, typically after your metadata:
-  <Script
-    async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322508130871793"
-    crossOrigin="anonymous"
-    strategy="afterInteractive"
-  />
 
   return (
     <main className="main-content">
-      {/* Inject JSON-LD Schema for Google Search bots */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
 
-      <GameSearch />
-
-      {/* Features Banner */}
-      <section className="features-banner">
-        <div className="feature-item">
-          <FaBolt className="feature-icon" />
-          <div>
-            <h4>1-Tap Instant Copy</h4>
-            <p>Click any code to copy instantly to your clipboard.</p>
-          </div>
-        </div>
-        <div className="feature-item">
-          <FaShieldAlt className="feature-icon" />
-          <div>
-            <h4>100% Tested & Working</h4>
-            <p>Our team verifies codes daily to remove expired ones.</p>
-          </div>
-        </div>
-        <div className="feature-item">
-          <FaSyncAlt className="feature-icon" />
-          <div>
-            <h4>Daily Code Updates</h4>
-            <p>Fresh codes added as soon as game devs publish updates.</p>
-          </div>
-        </div>
+      <section className="homepage-hero" aria-label="RoBcodes introduction">
+        <h1 className="sr-only">RoBcodes - Free Roblox Game Codes & Daily Verified Promo Codes 2026</h1>
+        <GameSearch />
       </section>
 
-      {/* Trending Games Section */}
-      <section className="section-container">
+      <section className="features-banner" aria-label="Why choose RoBcodes">
+        <ul className="features-list">
+          <li className="feature-item">
+            <FaBolt className="feature-icon" aria-hidden="true" />
+            <div>
+              <h2>1-Tap Instant Copy</h2>
+              <p>Click any code to copy instantly to your clipboard.</p>
+            </div>
+          </li>
+          <li className="feature-item">
+            <FaShieldAlt className="feature-icon" aria-hidden="true" />
+            <div>
+              <h2>100% Tested & Working</h2>
+              <p>Our team verifies codes daily to remove expired ones.</p>
+            </div>
+          </li>
+          <li className="feature-item">
+            <FaSyncAlt className="feature-icon" aria-hidden="true" />
+            <div>
+              <h2>Daily Code Updates</h2>
+              <p>Fresh codes added as soon as game devs publish updates.</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section className="section-container" aria-label="Trending games">
         <div className="section-header">
           <div>
             <h2 className="section-title">🔥 Trending Roblox Games</h2>
@@ -91,8 +83,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* All Games Grid Section */}
-      <section className="section-container">
+      <section className="section-container" aria-label="All games catalog">
         <div className="section-header">
           <div>
             <h2 className="section-title">🎮 All Roblox Games</h2>
@@ -107,11 +98,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* SEO Article & Guide Section */}
-      <section className="section-container seo-section">
-        <h2>How to Redeem Roblox Game Codes on RoBoCodes</h2>
+      <section className="section-container seo-section" aria-label="How to redeem Roblox codes guide">
+        <h2>How to Redeem Roblox Game Codes on RoBcodes</h2>
         <p>
-          Welcome to <strong>RoBoCodes</strong>, your #1 source for active, daily-tested Roblox game promo codes! Whether you are seeking <strong>2x EXP boosts in Blox Fruits</strong>, free gems in <em>Blade Ball</em>, stat resets in <em>King Legacy</em>, or summons in <em>Anime Defenders</em>, we provide instant one-tap copy functionality to get your rewards instantly.
+          Welcome to <strong>RoBcodes</strong>, your #1 source for active, daily-tested Roblox game promo codes! Whether you are seeking <strong>2x EXP boosts in Blox Fruits</strong>, free gems in <em>Blade Ball</em>, stat resets in <em>King Legacy</em>, or summons in <em>Anime Defenders</em>, we provide instant one-tap copy functionality to get your rewards instantly.
         </p>
         <div className="seo-grid">
           <div className="seo-card">

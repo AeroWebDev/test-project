@@ -27,14 +27,14 @@ export async function POST(req: Request) {
         body: JSON.stringify({
           embeds: [
             {
-              title: "📬 New Contact Message — RoBoCodes",
+              title: "📬 New Contact Message — RoBcodes",
               color: 0xa855f7,
               fields: [
                 { name: "Name", value: name, inline: true },
                 { name: "Email", value: email, inline: true },
                 { name: "Message", value: message },
               ],
-              footer: { text: "RoBoCodes Contact Form" },
+              footer: { text: "RoBcodes Contact Form" },
               timestamp: new Date().toISOString(),
             },
           ],

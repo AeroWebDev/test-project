@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "RoBoCodes Terms of Service.",
+  description: "RoBcodes Terms of Service.",
 };
 
 export default function TermsPage() {
@@ -13,21 +13,21 @@ export default function TermsPage() {
 
       <h2>1. Acceptance of Terms</h2>
       <p>
-        By accessing or using RoBoCodes (the &quot;Site&quot;), you agree to be bound by these
+        By accessing or using RoBcodes (the &quot;Site&quot;), you agree to be bound by these
         Terms of Service. If you do not agree with any part of these terms, please do not use
         the Site.
       </p>
 
       <h2>2. Description of Service</h2>
       <p>
-        RoBoCodes is a free, independent resource that lists publicly available promotional
+        RoBcodes is a free, independent resource that lists publicly available promotional
         codes for Roblox games. No account, registration, or payment is required to browse or
         copy codes.
       </p>
 
       <h2>3. No Affiliation with Roblox Corporation</h2>
       <p>
-        RoBoCodes is an independent fan resource and is not affiliated with, endorsed by,
+        RoBcodes is an independent fan resource and is not affiliated with, endorsed by,
         sponsored by, or otherwise associated with Roblox Corporation or the developers of any
         game listed on this Site. All game names, logos, and trademarks belong to their
         respective owners and are used solely to identify the games the codes apply to.
@@ -36,7 +36,7 @@ export default function TermsPage() {
       <h2>4. Accuracy of Codes</h2>
       <p>
         Codes are collected and published on a best-effort basis. Game developers control when
-        a code activates and expires, not RoBoCodes, so a code may stop working at any time
+        a code activates and expires, not RoBcodes, so a code may stop working at any time
         without notice. We do not guarantee that any code will be valid, and we are not
         responsible for rewards, items, or in-game effects tied to a code.
       </p>
@@ -57,7 +57,7 @@ export default function TermsPage() {
 
       <h2>7. Intellectual Property</h2>
       <p>
-        The Site&apos;s original text, design, and layout are owned by RoBoCodes. Game titles,
+        The Site&apos;s original text, design, and layout are owned by RoBcodes. Game titles,
         logos, and other trademarks referenced on the Site remain the property of their
         respective owners and are used under fair, nominative use for identification purposes
         only.
@@ -74,7 +74,7 @@ export default function TermsPage() {
       <h2>9. Disclaimer &amp; Limitation of Liability</h2>
       <p>
         The Site is provided &quot;as is&quot; and &quot;as available&quot; without warranties
-        of any kind. To the fullest extent permitted by law, RoBoCodes is not liable for any
+        of any kind. To the fullest extent permitted by law, RoBcodes is not liable for any
         indirect, incidental, or consequential damages arising from your use of the Site or
         reliance on any code listed here.
       </p>

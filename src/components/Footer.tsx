@@ -6,8 +6,11 @@ export default function Footer() {
     <footer className="footer">
       {/* Brand logo & Copyright */}
       <div className="footer-logo">
-        <span className="dot"></span> RoBoCodes
-        <p>© {new Date().getFullYear()} RoBoCodes. Daily working codes for Roblox games. All rights reserved.</p>
+        <span className="dot"></span> RoBcodes
+        <p>© {new Date().getFullYear()} RoBcodes. Daily working codes for Roblox games. All rights reserved.</p>
+        <p className="footer-credit">
+          Made by <a href="https://aeroteam.vercel.app/" target="_blank" rel="noopener noreferrer" title="Visit Aero Team website">Aero Team</a>
+        </p>
       </div>
 
       {/* Navigation links for SEO */}
@@ -15,8 +18,8 @@ export default function Footer() {
         <ul>
           <li><Link href="/" title="Go to Home Page">Home</Link></li>
           <li><Link href="/games" title="Browse All Games">All Games Catalog</Link></li>
-          <li><Link href="/about" title="Learn more about RoBoCodes">About Us</Link></li>
-          <li><Link href="/contact" title="Contact RoBoCodes team">Contact Support</Link></li>
+          <li><Link href="/about" title="Learn more about RoBcodes">About Us</Link></li>
+          <li><Link href="/contact" title="Contact RoBcodes team">Contact Support</Link></li>
           <li><Link href="/privacy" title="Privacy Policy">Privacy Policy</Link></li>
           <li><Link href="/terms" title="Terms of Service">Terms of Service</Link></li>
         </ul>

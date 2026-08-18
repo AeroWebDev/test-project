@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
 
   return {
     title: `${game.title} Codes (${updatedAt}) - ${activeCount} Working Rewards`,
-    description: `Get all active ${game.title} Roblox promo codes for ${updatedAt}. Copy working codes for free rewards, boosts, gems, and stat resets instantly on RoBoCodes!`,
+    description: `Get all active ${game.title} Roblox promo codes for ${updatedAt}. Copy working codes for free rewards, boosts, gems, and stat resets instantly on RoBcodes!`,
     keywords: [`${game.title} codes`, `${game.title} roblox codes`, `${game.title} redeem codes`, `${game.title} codes 2026`],
     openGraph: {
       title: `${game.title} Codes (${updatedAt}) - Free Rewards`,
@@ -95,19 +95,19 @@ export default async function GameDetailPage({ params }: GamePageProps) {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://robocodes.net"
+            "item": "https://robcodes.net"
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Games",
-            "item": "https://robocodes.net/games"
+            "item": "https://robcodes.net/games"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": game.title,
-            "item": `https://robocodes.net/games/${game.slug}`
+            "item": `https://robcodes.net/games/${game.slug}`
           }
         ]
       }

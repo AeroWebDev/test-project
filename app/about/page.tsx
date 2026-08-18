@@ -2,15 +2,15 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn more about RoBoCodes, a fast and clutter-free source for Roblox game codes.",
+  description: "Learn more about RoBcodes, a fast and clutter-free source for Roblox game codes.",
 };
 
 export default function AboutPage() {
   return (
     <main className="main-content section-container content-page">
-      <h1>About RoBoCodes</h1>
+      <h1>About RoBcodes</h1>
       <p className="lead">
-        RoBoCodes is dedicated to giving Roblox players fast, clean, and clutter-free redeem
+        RoBcodes is dedicated to giving Roblox players fast, clean, and clutter-free redeem
         codes for their favorite games.
       </p>
 
@@ -32,7 +32,7 @@ export default function AboutPage() {
 
       <h2>Disclaimer</h2>
       <p>
-        RoBoCodes is an independent fan resource and is not affiliated, associated, authorized,
+        RoBcodes is an independent fan resource and is not affiliated, associated, authorized,
         endorsed by, or in any way officially connected with Roblox Corporation or any of its
         subsidiaries.
       </p>

@@ -11,7 +11,7 @@ interface SEOProps {
 }
 
 export default function SEO({
-  title = "RoBoCodes | Latest Roblox Game Codes & Rewards 2026",
+  title = "RoBcodes | Latest Roblox Game Codes & Rewards 2026",
   description = "Find active, daily-verified Roblox game codes for Blox Fruits, Blade Ball, King Legacy, Anime Defenders and 100+ top Roblox games. One-tap copy codes instantly!",
   keywords = "roblox codes, roblox game codes, blox fruits codes, blade ball codes, king legacy codes, anime defenders codes, roblox redeem codes 2026",
   canonical,

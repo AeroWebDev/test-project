@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Game as SupabaseGame } from "@/src/lib/supabase";
 import GameCard from "@/src/components/GameCard";
 import { useToast } from "@/src/components/Toast";
@@ -15,7 +14,7 @@ import {
   FaChevronUp,
   FaGift,
   FaQuestionCircle,
-  FaExclamationTriangle
+  FaExclamationTriangle,
 } from "react-icons/fa";
 
 interface GameCodesClientProps {
@@ -57,11 +56,16 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
 
   return (
     <>
-      {/* Hero Banner Section */}
-      <section className="game-detail-hero">
-        <div className="hero-backdrop" style={{ backgroundImage: `url(${bannerUrl})` }}></div>
+      <section className="game-detail-hero" aria-label="Game header information">
+        <div className="hero-backdrop" style={{ backgroundImage: `url(${bannerUrl})` }} aria-hidden="true" />
         <div className="hero-content">
-          <img src={imageUrl} alt={`${game.title} Cover`} className="hero-thumb" />
+          <img
+            src={imageUrl}
+            alt={`${game.title} official game cover art`}
+            className="hero-thumb"
+            width={200}
+            height={200}
+          />
           <div className="hero-info">
             <div className="hero-badges">
               <span className="badge badge-category">{game.category}</span>
@@ -69,46 +73,63 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
             </div>
 
             <h1>{game.title} Codes</h1>
-            <p className="hero-dev">Developed by <strong>{game.developer}</strong></p>
+            <p className="hero-dev">
+              Developed by <strong>{game.developer}</strong>
+            </p>
 
             <div className="hero-meta">
-              <span><FaClock /> Updated: {updatedAtStr}</span>
-              <span><FaThumbsUp /> {game.likes} Likes</span>
-              <span><FaUsers /> {activePlayers} Players</span>
+              <span>
+                <FaClock /> Updated: {updatedAtStr}
+              </span>
+              <span>
+                <FaThumbsUp /> {game.likes} Likes
+              </span>
+              <span>
+                <FaUsers /> {activePlayers} Players
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section-container">
-        {/* Game Description */}
+      <section className="section-container" aria-label="Game details and codes">
         <div className="game-intro-box">
           <p>{game.description}</p>
         </div>
 
-        {/* Active Codes Section */}
         <div className="codes-section">
           <div className="codes-header">
-            <h2><FaGift className="section-icon" /> Active {game.title} Codes ({activeCodes.length})</h2>
+            <h2>
+              <FaGift className="section-icon" aria-hidden="true" /> Active {game.title} Codes ({activeCodes.length})
+            </h2>
             <p>Click any button below to copy the code to your clipboard.</p>
           </div>
 
           {activeCodes.length > 0 ? (
-            <div className="codes-list">
+            <ul className="codes-list" role="list" aria-label="Active redeem codes">
               {activeCodes.map((c: any) => (
-                <div key={c.id} className="code-card">
+                <li key={c.id} className="code-card" role="listitem">
                   <div className="code-card-info">
                     <div className="code-card-header">
-                      <span className="code-text">{c.code}</span>
-                      {(c.is_new ?? c.isNew) && <span className="badge badge-new">NEW</span>}
+                      <code className="code-text" aria-label={`Redeem code: ${c.code}`}>
+                        {c.code}
+                      </code>
+                      {(c.is_new ?? c.isNew) && (
+                        <span className="badge badge-new" aria-label="New code">
+                          NEW
+                        </span>
+                      )}
                     </div>
-                    <p className="code-reward"><strong>Reward:</strong> {c.reward}</p>
+                    <p className="code-reward">
+                      <strong>Reward:</strong> <span>{c.reward}</span>
+                    </p>
                   </div>
 
                   <button
                     className={`copy-btn ${copiedCodeId === c.id ? "copied" : ""}`}
                     onClick={() => handleCopyCode(c.code, c.id)}
-                    title={`Copy ${c.code}`}
+                    title={`Copy code ${c.code}`}
+                    aria-label={`Copy code ${c.code} for reward: ${c.reward}`}
                   >
                     {copiedCodeId === c.id ? (
                       <>
@@ -120,9 +141,9 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
                       </>
                     )}
                   </button>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           ) : (
             <div className="no-codes-box">
               <FaExclamationTriangle className="warning-icon" />
@@ -131,86 +152,99 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
           )}
         </div>
 
-        {/* Expired Codes Section */}
         {expiredCodes.length > 0 && (
-          <div className="expired-section">
+          <section className="expired-section" aria-label="Expired codes archive">
+            <h2>Expired {game.title} Codes ({expiredCodes.length})</h2>
             <button
               className="expired-toggle-btn"
               onClick={() => setShowExpired(!showExpired)}
+              aria-expanded={showExpired}
+              aria-label="Toggle expired codes visibility"
             >
-              <span>Expired {game.title} Codes ({expiredCodes.length})</span>
-              {showExpired ? <FaChevronUp /> : <FaChevronDown />}
+              <span>Show expired codes</span>
+              {showExpired ? <FaChevronUp aria-hidden="true" /> : <FaChevronDown aria-hidden="true" />}
             </button>
 
             {showExpired && (
               <div className="expired-list">
                 <p className="expired-notice">
-                  Note: These codes have expired and no longer reward anything, but are listed for reference.
+                  ⚠️ Note: These codes have expired and no longer reward anything, but are listed for reference.
                 </p>
-                {expiredCodes.map((c: any) => (
-                  <div key={c.id} className="code-card expired">
-                    <div className="code-card-info">
-                      <span className="code-text strikethrough">{c.code}</span>
-                      <p className="code-reward">{c.reward}</p>
-                    </div>
-                    <span className="badge badge-expired">Expired</span>
-                  </div>
-                ))}
+                <ul role="list" aria-label="Expired redeem codes">
+                  {expiredCodes.map((c: any) => (
+                    <li key={c.id} className="code-card expired" role="listitem">
+                      <div className="code-card-info">
+                        <code className="code-text strikethrough" aria-label={`Expired code: ${c.code}`}>
+                          {c.code}
+                        </code>
+                        <p className="code-reward">{c.reward}</p>
+                      </div>
+                      <span className="badge badge-expired" aria-label="This code has expired">
+                        Expired
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
-          </div>
+          </section>
         )}
 
-        {/* How to Redeem Instructions */}
         {redeemSteps.length > 0 && (
-          <div className="how-to-redeem-box">
+          <section className="how-to-redeem-box" aria-label="Redemption guide">
             <h2>🎮 How to Redeem Codes in {game.title}</h2>
             <ol className="steps-list">
               {redeemSteps.map((step, index) => (
                 <li key={index}>
-                  <span className="step-num">{index + 1}</span>
+                  <span className="step-num" aria-hidden="true">
+                    {index + 1}
+                  </span>
                   <span className="step-text">{step}</span>
                 </li>
               ))}
             </ol>
-          </div>
+          </section>
         )}
 
-        {/* Frequently Asked Questions */}
         {faqs.length > 0 && (
-          <div className="faq-section">
-            <h2><FaQuestionCircle className="section-icon" /> Frequently Asked Questions</h2>
-            <div className="faq-accordion">
+          <section className="faq-section" aria-label="Frequently asked questions">
+            <h2>
+              <FaQuestionCircle className="section-icon" aria-hidden="true" /> Frequently Asked Questions
+            </h2>
+            <div className="faq-accordion" role="region" aria-label="FAQs">
               {faqs.map((faq: any, index: number) => (
                 <div key={index} className="faq-item">
                   <button
                     className="faq-question"
                     onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                    aria-expanded={openFaqIndex === index}
+                    aria-controls={`faq-answer-${index}`}
                   >
                     <span>{faq.question}</span>
-                    {openFaqIndex === index ? <FaChevronUp /> : <FaChevronDown />}
+                    {openFaqIndex === index ? <FaChevronUp aria-hidden="true" /> : <FaChevronDown aria-hidden="true" />}
                   </button>
                   {openFaqIndex === index && (
-                    <div className="faq-answer">
+                    <div className="faq-answer" id={`faq-answer-${index}`}>
                       <p>{faq.answer}</p>
                     </div>
                   )}
                 </div>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Related Games Recommendation */}
         {relatedGames.length > 0 && (
-          <div className="related-games-section">
+          <section className="related-games-section" aria-label="Related games">
             <h2>More {game.category} Roblox Games</h2>
-            <div className="games-grid">
+            <div className="games-grid" role="list">
               {relatedGames.map((rg) => (
-                <GameCard key={rg.id} game={rg} />
+                <div key={rg.id} role="listitem">
+                  <GameCard game={rg} />
+                </div>
               ))}
             </div>
-          </div>
+          </section>
         )}
       </section>
     </>

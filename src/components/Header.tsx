@@ -40,9 +40,9 @@ export default function Header() {
     <header className="header">
       {/* Logo */}
       <div className="logo">
-        <Link href="/" title="RoBoCodes — Free Roblox Game Codes">
+        <Link href="/" title="RoBcodes — Free Roblox Game Codes">
           <span className="dot"></span>
-          <span className="logo-text">RoBoCodes</span>
+          <span className="logo-text">RoBcodes</span>
         </Link>
       </div>
 

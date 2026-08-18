@@ -9,7 +9,6 @@ interface GameCardProps {
 
 export default function GameCard({ game }: GameCardProps) {
   const imageUrl = game.image_url || game.imageUrl;
-  const activePlayers = game.active_players || game.activePlayers;
   const isTrending = game.is_trending ?? game.isTrending;
   const codesList = game.codes || [];
   const activeCodes = codesList.filter((c: any) => c.status === "active").length;
@@ -17,7 +16,13 @@ export default function GameCard({ game }: GameCardProps) {
   return (
     <div className="game-card">
       <div className="game-card-img-wrap">
-        <img src={imageUrl} alt={`${game.title} Roblox Game`} loading="lazy" />
+        <img
+          src={imageUrl}
+          alt={`${game.title} - Roblox game with active promo codes for free rewards`}
+          loading="lazy"
+          width={280}
+          height={160}
+        />
         {isTrending && (
           <span className="badge badge-trending">
             <FaFire /> Trending

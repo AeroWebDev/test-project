@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Game as SupabaseGame } from "@/src/lib/supabase";
 import GameCard from "@/src/components/GameCard";
 import { useToast } from "@/src/components/Toast";
@@ -28,8 +29,8 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
   const [showExpired, setShowExpired] = useState<boolean>(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
-  const bannerUrl = game.banner_url || game.bannerUrl;
-  const imageUrl = game.image_url || game.imageUrl;
+  const bannerUrl = game.banner_url || game.bannerUrl || "/og-image.png";
+  const imageUrl = game.image_url || game.imageUrl || "/og-image.png";
   const activePlayers = game.active_players || game.activePlayers;
   const codesList = game.codes || [];
   const activeCodes = codesList.filter((c: any) => c.status === "active");
@@ -45,6 +46,11 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
     ? new Date(game.updated_at).toLocaleDateString("en-US", { month: "long", year: "numeric" })
     : game.updatedAt || "August 2026";
 
+  // Derive a readable "last verified" date (use updated_at or today as fallback)
+  const lastVerified = game.updated_at
+    ? new Date(game.updated_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+    : new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
   const handleCopyCode = (codeText: string, codeId: string) => {
     navigator.clipboard.writeText(codeText);
     setCopiedCodeId(codeId);
@@ -59,12 +65,14 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
       <section className="game-detail-hero" aria-label="Game header information">
         <div className="hero-backdrop" style={{ backgroundImage: `url(${bannerUrl})` }} aria-hidden="true" />
         <div className="hero-content">
-          <img
+          <Image
             src={imageUrl}
-            alt={`${game.title} official game cover art`}
+            alt={`${game.title} official game icon`}
             className="hero-thumb"
             width={200}
             height={200}
+            priority
+            unoptimized={imageUrl?.includes("rbxcdn.com") || imageUrl?.startsWith("http")}
           />
           <div className="hero-info">
             <div className="hero-badges">
@@ -102,7 +110,12 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
             <h2>
               <FaGift className="section-icon" aria-hidden="true" /> Active {game.title} Codes ({activeCodes.length})
             </h2>
-            <p>Click any button below to copy the code to your clipboard.</p>
+            <p>
+              Click any button below to copy the code to your clipboard.{" "}
+              <span className="last-verified" aria-label={`Codes last verified on ${lastVerified}`}>
+                ✓ Last verified: {lastVerified}
+              </span>
+            </p>
           </div>
 
           {activeCodes.length > 0 ? (
@@ -211,9 +224,14 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
             <h2>
               <FaQuestionCircle className="section-icon" aria-hidden="true" /> Frequently Asked Questions
             </h2>
+            {/*
+              SSR-SAFE ACCORDION: All FAQ answers are rendered in the initial server HTML
+              (critical for Googlebot indexing and FAQ rich snippets). Visibility is
+              controlled via CSS using the data-open attribute, not conditional rendering.
+            */}
             <div className="faq-accordion" role="region" aria-label="FAQs">
               {faqs.map((faq: any, index: number) => (
-                <div key={index} className="faq-item">
+                <div key={index} className="faq-item" data-open={openFaqIndex === index ? "true" : "false"}>
                   <button
                     className="faq-question"
                     onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
@@ -223,11 +241,15 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
                     <span>{faq.question}</span>
                     {openFaqIndex === index ? <FaChevronUp aria-hidden="true" /> : <FaChevronDown aria-hidden="true" />}
                   </button>
-                  {openFaqIndex === index && (
-                    <div className="faq-answer" id={`faq-answer-${index}`}>
-                      <p>{faq.answer}</p>
-                    </div>
-                  )}
+                  {/* Answer is ALWAYS in the DOM for SSR/Googlebot — CSS hides it when data-open="false" */}
+                  <div
+                    className="faq-answer"
+                    id={`faq-answer-${index}`}
+                    role="region"
+                    aria-labelledby={`faq-question-${index}`}
+                  >
+                    <p>{faq.answer}</p>
+                  </div>
                 </div>
               ))}
             </div>

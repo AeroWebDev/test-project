@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Game as SupabaseGame } from "../lib/supabase";
 import { Game as LocalGame } from "../data/gamesData";
 import { FaFire, FaKey, FaThumbsUp } from "react-icons/fa";
@@ -8,7 +9,7 @@ interface GameCardProps {
 }
 
 export default function GameCard({ game }: GameCardProps) {
-  const imageUrl = game.image_url || game.imageUrl;
+  const imageUrl = game.image_url || game.imageUrl || "/og-image.png";
   const isTrending = game.is_trending ?? game.isTrending;
   const codesList = game.codes || [];
   const activeCodes = codesList.filter((c: any) => c.status === "active").length;
@@ -16,12 +17,14 @@ export default function GameCard({ game }: GameCardProps) {
   return (
     <div className="game-card">
       <div className="game-card-img-wrap">
-        <img
+        <Image
           src={imageUrl}
-          alt={`${game.title} - Roblox game with active promo codes for free rewards`}
+          alt={`${game.title} Roblox game icon — active promo codes for free rewards`}
           loading="lazy"
           width={280}
           height={160}
+          unoptimized={imageUrl?.includes("rbxcdn.com") || imageUrl?.startsWith("http")}
+          style={{ objectFit: "cover", width: "100%", height: "100%" }}
         />
         {isTrending && (
           <span className="badge badge-trending">

@@ -1,9 +1,3 @@
-/* =============================================
-   RoBcodes — PREMIUM DARK GAMING STYLESHEET
-   ============================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
-
 /* =========================
    CSS VARIABLES
 ========================= */
@@ -3047,3 +3041,198 @@ button { font-family: var(--font-body); }
   }
 }
 
+/* =============================================
+   FAQ ACCORDION — SSR-SAFE
+   Answers are ALWAYS in the DOM (for Googlebot / rich snippets).
+   Visibility is controlled by [data-open] on the parent .faq-item,
+   not by conditional JS rendering.
+   ============================================= */
+
+.faq-section {
+  margin-top: 2.5rem;
+}
+
+.faq-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-h);
+  margin-bottom: 1.25rem;
+}
+
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color var(--t);
+}
+
+.faq-item[data-open="true"] {
+  border-color: var(--accent-border);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-h);
+  text-align: left;
+  transition: background var(--t), color var(--t);
+}
+
+.faq-question:hover {
+  background: var(--bg-hover);
+  color: var(--accent-2);
+}
+
+.faq-question svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+/* Answer is always in the DOM — hidden by default via max-height + overflow */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 1.25rem;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item[data-open="true"] .faq-answer {
+  max-height: 600px;
+  padding: 0 1.25rem 1.25rem;
+}
+
+.faq-answer p {
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* =============================================
+   LAST VERIFIED BADGE
+   ============================================= */
+
+.last-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--green);
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-radius: var(--radius-pill);
+  padding: 0.2rem 0.65rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* =============================================
+   CONTACT PAGE — DIRECT CONTACT FALLBACK
+   Always visible above the form, no interaction required
+   ============================================= */
+
+.contact-direct {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-lg);
+}
+
+.contact-direct-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  flex: 1;
+  min-width: 220px;
+}
+
+.contact-direct-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.contact-direct-item strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-h);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.contact-direct-item p {
+  margin: 0 0 0.2rem;
+}
+
+.contact-direct-link {
+  color: var(--accent-2);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color var(--t);
+}
+
+.contact-direct-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.contact-direct-note {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+/* =============================================
+   INLINE LINK — used in About page body text
+   ============================================= */
+
+.inline-link {
+  color: var(--accent-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: color var(--t);
+}
+
+.inline-link:hover {
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .contact-direct {
+    flex-direction: column;
+  }
+
+  .last-verified {
+    display: none; /* collapse on very small screens to avoid wrapping codes header */
+  }
+}

@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { GAMES_DATA, Game as LocalGame } from "../data/gamesData";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://rysqxduvcuqpjvjqouvm.supabase.co";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
 // Public client — for reading games, codes, etc.

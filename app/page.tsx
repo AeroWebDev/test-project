@@ -27,15 +27,55 @@ export default async function HomePage() {
     },
   };
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "RoBcodes",
+    url: siteUrl,
+    logo: `${siteUrl}/og-image.png`,
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "aeroteam.agency@gmail.com",
+      contactType: "customer support",
+      availableLanguage: "English",
+    },
+    sameAs: [
+      "https://discord.gg/robcodes",
+    ],
+  };
+
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Roblox Game Codes Directory",
+    description: "A directory of active Roblox promo codes for top games including Blox Fruits, Blade Ball, King Legacy, and more.",
+    url: `${siteUrl}/games`,
+    numberOfItems: allGames.length,
+    itemListElement: allGames.map((game, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: `${game.title} Codes`,
+      url: `${siteUrl}/games/${game.slug}`,
+    })),
+  };
+
   return (
     <main className="main-content">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
 
       <section className="homepage-hero" aria-label="RoBcodes introduction">
-        <h1 className="sr-only">RoBcodes - Free Roblox Game Codes & Daily Verified Promo Codes 2026</h1>
+        <h1 className="sr-only">RoBcodes - Free Roblox Game Codes &amp; Daily Verified Promo Codes 2026</h1>
         <GameSearch />
       </section>
 
@@ -51,7 +91,7 @@ export default async function HomePage() {
           <li className="feature-item">
             <FaShieldAlt className="feature-icon" aria-hidden="true" />
             <div>
-              <h2>100% Tested & Working</h2>
+              <h2>100% Tested &amp; Working</h2>
               <p>Our team verifies codes daily to remove expired ones.</p>
             </div>
           </li>

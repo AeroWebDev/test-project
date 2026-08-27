@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "../src/components/Header";
@@ -17,7 +18,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robcodes.net";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robcodes.vercel.app";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -31,6 +32,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  verification: {
+    google: "UieGTdr9SBfZZlfT36ec-euaS0lMrPOznSu9I7FTw-U",
+  },
   other: {
     "google-adsense-account": "ca-pub-8322508130871793",
   },
@@ -38,7 +42,7 @@ export const metadata: Metadata = {
     default: "RoBcodes | Free Roblox Game Codes & Rewards 2026",
     template: "%s | RoBcodes",
   },
-  description: "Find active, daily-tested Roblox game promo codes for Blox Fruits, Blade Ball, King Legacy, Anime Defenders, and 100+ top Roblox games. One-tap copy codes!",
+  description: "Find active, daily-tested Roblox promo codes for Blox Fruits, Blade Ball, King Legacy, Anime Defenders, Pet Simulator 99, Shindo Life, and more. One-tap copy codes!",
   keywords: ["roblox codes", "blox fruits codes 2026", "blade ball codes", "king legacy codes", "anime defenders codes", "roblox redeem codes"],
   authors: [{ name: "Aero Team" }],
   creator: "Aero Team",
@@ -62,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "RoBcodes | Free Roblox Game Codes & Rewards 2026",
     description: "Daily-verified Roblox game codes with 1-tap instant copy.",
-    images: ["https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&auto=format&fit=crop&q=80"],
+    images: ["/og-image.png"],
   },
   icons: {
     icon: "/favicon.svg",
@@ -76,19 +80,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${outfit.variable} ${inter.variable}`}>
-      <head>
+      <body>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-6ZY4Y6ZBW0"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-6ZY4Y6ZBW0');
+          `}
+        </Script>
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322508130871793"
           crossOrigin="anonymous"
         />
-      </head>
-      <body>
-          <ToastProvider>
-            <Header />
-            {children}
-            <Footer />
-          </ToastProvider>
+        <ToastProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ToastProvider>
       </body>
     </html>
   );

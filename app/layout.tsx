@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "../src/components/Header";
@@ -81,19 +80,22 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${outfit.variable} ${inter.variable}`}>
       <body>
-        <Script
+        {/* Google Tag Manager / Analytics (Server-rendered into initial HTML on every page) */}
+        <script
+          async
           src="https://www.googletagmanager.com/gtag/js?id=G-6ZY4Y6ZBW0"
-          strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-6ZY4Y6ZBW0');
-          `}
-        </Script>
+        <script
+          id="google-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-6ZY4Y6ZBW0');
+            `,
+          }}
+        />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322508130871793"

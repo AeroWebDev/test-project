@@ -25,10 +25,29 @@ export default function GameAdminPage() {
 
   // Restore session from sessionStorage on load
   useEffect(() => {
-    const savedPass = sessionStorage.getItem(`admin_pass_${accessUuid}`);
-    if (savedPass) {
-      setPassword(savedPass);
-      loginWithPassword(savedPass);
+    sessionStorage.removeItem(`admin_pass_${accessUuid}`); // Clean up legacy saved passwords
+    const isAuth = sessionStorage.getItem(`admin_uuid_auth_${accessUuid}`) === "true";
+    const savedName = sessionStorage.getItem(`admin_uuid_name_${accessUuid}`);
+    const savedGame = sessionStorage.getItem(`admin_uuid_game_${accessUuid}`);
+    const savedCodes = sessionStorage.getItem(`admin_uuid_codes_${accessUuid}`);
+
+    if (isAuth) {
+      setIsAuthenticated(true);
+      if (savedName) setAdminName(savedName);
+      if (savedGame) {
+        try {
+          setGame(JSON.parse(savedGame));
+        } catch {
+          // fallback
+        }
+      }
+      if (savedCodes) {
+        try {
+          setCodes(JSON.parse(savedCodes));
+        } catch {
+          // fallback
+        }
+      }
     }
   }, [accessUuid]);
 
@@ -48,13 +67,25 @@ export default function GameAdminPage() {
       if (!res.ok || !data.success) {
         setError(data.error || "Login failed");
         setIsAuthenticated(false);
-        sessionStorage.removeItem(`admin_pass_${accessUuid}`);
+        sessionStorage.removeItem(`admin_uuid_auth_${accessUuid}`);
+        sessionStorage.removeItem(`admin_uuid_name_${accessUuid}`);
+        sessionStorage.removeItem(`admin_uuid_game_${accessUuid}`);
+        sessionStorage.removeItem(`admin_uuid_codes_${accessUuid}`);
       } else {
         setIsAuthenticated(true);
         setAdminName(data.adminName);
         setGame(data.game);
         setCodes(data.codes);
-        sessionStorage.setItem(`admin_pass_${accessUuid}`, pass);
+
+        // Store session state without saving password
+        sessionStorage.setItem(`admin_uuid_auth_${accessUuid}`, "true");
+        sessionStorage.setItem(`admin_uuid_name_${accessUuid}`, data.adminName);
+        if (data.game) {
+          sessionStorage.setItem(`admin_uuid_game_${accessUuid}`, JSON.stringify(data.game));
+        }
+        if (data.codes) {
+          sessionStorage.setItem(`admin_uuid_codes_${accessUuid}`, JSON.stringify(data.codes));
+        }
       }
     } catch (err: any) {
       setError("Network or server connection error");
@@ -71,6 +102,10 @@ export default function GameAdminPage() {
   function handleLogout() {
     setIsAuthenticated(false);
     setPassword("");
+    sessionStorage.removeItem(`admin_uuid_auth_${accessUuid}`);
+    sessionStorage.removeItem(`admin_uuid_name_${accessUuid}`);
+    sessionStorage.removeItem(`admin_uuid_game_${accessUuid}`);
+    sessionStorage.removeItem(`admin_uuid_codes_${accessUuid}`);
     sessionStorage.removeItem(`admin_pass_${accessUuid}`);
   }
 

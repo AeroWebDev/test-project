@@ -41,10 +41,12 @@ export default function CodesManagement() {
 
   // Restore session from sessionStorage on load
   useEffect(() => {
-    const savedPass = sessionStorage.getItem("admin_aero_pass");
-    if (savedPass) {
-      setPassword(savedPass);
-      authenticateAndFetchData(savedPass);
+    sessionStorage.removeItem("admin_aero_pass"); // Clean up legacy saved passwords
+    const isAuth = sessionStorage.getItem("admin_aero_auth") === "true";
+    if (isAuth) {
+      setIsAuthenticated(true);
+      fetchCodes();
+      fetchGames();
     }
   }, []);
 
@@ -64,12 +66,15 @@ export default function CodesManagement() {
       if (!res.ok || !data.success) {
         setError(data.error || "Authentication failed");
         setIsAuthenticated(false);
-        sessionStorage.removeItem("admin_aero_pass");
+        sessionStorage.removeItem("admin_aero_auth");
+        sessionStorage.removeItem("admin_aero_name");
       } else {
         setIsAuthenticated(true);
-        sessionStorage.setItem("admin_aero_pass", pass);
-        fetchCodes(pass);
-        fetchGames(pass);
+        setPassword(""); // Clear password from memory
+        sessionStorage.setItem("admin_aero_auth", "true");
+        sessionStorage.setItem("admin_aero_name", data.adminName || "Aero Administrator");
+        fetchCodes();
+        fetchGames();
       }
     } catch (err: any) {
       setError("Network error");
@@ -78,7 +83,7 @@ export default function CodesManagement() {
     }
   }
 
-  async function fetchCodes(pass: string) {
+  async function fetchCodes() {
     try {
       const res = await fetch("/api/admin/codes");
 
@@ -93,7 +98,7 @@ export default function CodesManagement() {
     }
   }
 
-  async function fetchGames(pass: string) {
+  async function fetchGames() {
     try {
       const res = await fetch("/api/admin/games");
 
@@ -132,6 +137,9 @@ export default function CodesManagement() {
   function handleLogout() {
     setIsAuthenticated(false);
     setPassword("");
+    sessionStorage.removeItem("admin_aero_auth");
+    sessionStorage.removeItem("admin_aero_name");
+    sessionStorage.removeItem("admin_aero_stats");
     sessionStorage.removeItem("admin_aero_pass");
   }
 

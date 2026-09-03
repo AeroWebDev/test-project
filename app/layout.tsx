@@ -17,7 +17,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robcodes.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://robcodes.net";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -79,7 +79,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${outfit.variable} ${inter.variable}`}>
-      <body>
+      <head>
         {/* Google Tag Manager / Analytics (Server-rendered into initial HTML on every page) */}
         <script
           async
@@ -101,6 +101,8 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322508130871793"
           crossOrigin="anonymous"
         />
+      </head>
+      <body>
         <ToastProvider>
           <Header />
           {children}

@@ -59,6 +59,19 @@ export interface FAQ {
   order_num?: number;
 }
 
+export interface GameAnalyticsDaily {
+  id?: string;
+  game_id: string;
+  date: string;
+  views: number;
+  unique_visitors: number;
+  code_copies: number;
+  discord_clicks: number;
+  exclusive_unlocks: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
 // Convert local mock format to DB Game format for graceful fallback
 function mapLocalToDbGame(local: LocalGame): Game {
   return {

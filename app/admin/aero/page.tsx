@@ -17,10 +17,21 @@ export default function AdminDashboard() {
 
   // Restore session from sessionStorage on load
   useEffect(() => {
-    const savedPass = sessionStorage.getItem("admin_aero_pass");
-    if (savedPass) {
-      setPassword(savedPass);
-      loginWithPassword(savedPass);
+    sessionStorage.removeItem("admin_aero_pass"); // Clean up any legacy saved passwords
+    const isAuth = sessionStorage.getItem("admin_aero_auth") === "true";
+    const savedName = sessionStorage.getItem("admin_aero_name");
+    const savedStats = sessionStorage.getItem("admin_aero_stats");
+
+    if (isAuth) {
+      setIsAuthenticated(true);
+      if (savedName) setAdminName(savedName);
+      if (savedStats) {
+        try {
+          setDashboardStats(JSON.parse(savedStats));
+        } catch {
+          // stats will be re-fetched on refresh
+        }
+      }
     }
   }, []);
 
@@ -40,12 +51,21 @@ export default function AdminDashboard() {
       if (!res.ok || !data.success) {
         setError(data.error || "Login failed");
         setIsAuthenticated(false);
-        sessionStorage.removeItem("admin_aero_pass");
+        sessionStorage.removeItem("admin_aero_auth");
+        sessionStorage.removeItem("admin_aero_name");
+        sessionStorage.removeItem("admin_aero_stats");
       } else {
         setIsAuthenticated(true);
         setAdminName(data.adminName);
         setDashboardStats(data.dashboardStats);
-        sessionStorage.setItem("admin_aero_pass", pass);
+        setPassword(""); // Clear password from memory
+
+        // Save session state without saving password
+        sessionStorage.setItem("admin_aero_auth", "true");
+        sessionStorage.setItem("admin_aero_name", data.adminName);
+        if (data.dashboardStats) {
+          sessionStorage.setItem("admin_aero_stats", JSON.stringify(data.dashboardStats));
+        }
       }
     } catch (err: any) {
       setError("Network or server connection error");
@@ -62,6 +82,9 @@ export default function AdminDashboard() {
   function handleLogout() {
     setIsAuthenticated(false);
     setPassword("");
+    sessionStorage.removeItem("admin_aero_auth");
+    sessionStorage.removeItem("admin_aero_name");
+    sessionStorage.removeItem("admin_aero_stats");
     sessionStorage.removeItem("admin_aero_pass");
   }
 

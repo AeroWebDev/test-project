@@ -1,6 +1,7 @@
 import Link from "next/link";
 import GameSearch from "../src/components/GameSearch";
 import GameCard from "../src/components/GameCard";
+import AdSenseUnit from "../src/components/AdSenseUnit";
 import { getTrendingGames, getAllGames } from "../src/lib/supabase";
 import { FaShieldAlt, FaBolt, FaSyncAlt } from "react-icons/fa";
 
@@ -103,6 +104,10 @@ export default async function HomePage() {
             </div>
           </li>
         </ul>
+      </section>
+
+      <section className="section-container" aria-label="Advertisement">
+        <AdSenseUnit />
       </section>
 
       <section className="section-container" aria-label="Trending games">

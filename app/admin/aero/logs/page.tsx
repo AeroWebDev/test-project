@@ -25,10 +25,11 @@ export default function Logs() {
 
   // Restore session from sessionStorage on load
   useEffect(() => {
-    const savedPass = sessionStorage.getItem("admin_aero_pass");
-    if (savedPass) {
-      setPassword(savedPass);
-      authenticateAndFetchLogs(savedPass);
+    sessionStorage.removeItem("admin_aero_pass"); // Clean up legacy saved passwords
+    const isAuth = sessionStorage.getItem("admin_aero_auth") === "true";
+    if (isAuth) {
+      setIsAuthenticated(true);
+      fetchLogs();
     }
   }, []);
 
@@ -48,11 +49,14 @@ export default function Logs() {
       if (!res.ok || !data.success) {
         setError(data.error || "Authentication failed");
         setIsAuthenticated(false);
-        sessionStorage.removeItem("admin_aero_pass");
+        sessionStorage.removeItem("admin_aero_auth");
+        sessionStorage.removeItem("admin_aero_name");
       } else {
         setIsAuthenticated(true);
-        sessionStorage.setItem("admin_aero_pass", pass);
-        fetchLogs(pass);
+        setPassword(""); // Clear password from memory
+        sessionStorage.setItem("admin_aero_auth", "true");
+        sessionStorage.setItem("admin_aero_name", data.adminName || "Aero Administrator");
+        fetchLogs();
       }
     } catch (err: any) {
       setError("Network error");
@@ -61,7 +65,7 @@ export default function Logs() {
     }
   }
 
-  async function fetchLogs(pass: string) {
+  async function fetchLogs() {
     setRefreshing(true);
     try {
       const res = await fetch("/api/admin/logs");
@@ -84,6 +88,9 @@ export default function Logs() {
   function handleLogout() {
     setIsAuthenticated(false);
     setPassword("");
+    sessionStorage.removeItem("admin_aero_auth");
+    sessionStorage.removeItem("admin_aero_name");
+    sessionStorage.removeItem("admin_aero_stats");
     sessionStorage.removeItem("admin_aero_pass");
   }
 

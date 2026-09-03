@@ -78,6 +78,7 @@ export default function GameSearch() {
           <input
             id="searchInput"
             type="text"
+            role="combobox"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setFocused(true)}
@@ -87,6 +88,8 @@ export default function GameSearch() {
             aria-label="Search for a Roblox game"
             aria-expanded={showDropdown}
             aria-haspopup="listbox"
+            aria-autocomplete="list"
+            aria-controls="search-dropdown-list"
           />
           {query && (
             <button className="clear-search" onClick={() => setQuery("")} title="Clear" aria-label="Clear search">
@@ -100,7 +103,7 @@ export default function GameSearch() {
 
         {/* Live search dropdown */}
         {showDropdown && (
-          <div className="search-dropdown" role="listbox">
+          <div className="search-dropdown" id="search-dropdown-list" role="listbox">
             {searchResults.length > 0 ? (
               <>
                 <div className="search-dropdown-label">Results for &ldquo;{query}&rdquo;</div>

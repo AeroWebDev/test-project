@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Game as SupabaseGame } from "@/src/lib/supabase";
 import GameCard from "@/src/components/GameCard";
 import { useToast } from "@/src/components/Toast";
+import { trackGameView, trackCodeCopy, trackDiscordClick } from "@/src/lib/analytics";
 import {
   FaCopy,
   FaCheck,
@@ -16,6 +17,7 @@ import {
   FaGift,
   FaQuestionCircle,
   FaExclamationTriangle,
+  FaDiscord,
 } from "react-icons/fa";
 
 interface GameCodesClientProps {
@@ -28,6 +30,17 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
   const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
   const [showExpired, setShowExpired] = useState<boolean>(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+
+  // Track GA4 and internal analytics game_view on mount
+  useEffect(() => {
+    if (game?.id && game?.slug) {
+      trackGameView({
+        id: String(game.id),
+        slug: game.slug,
+        title: game.title,
+      });
+    }
+  }, [game?.id, game?.slug, game?.title]);
 
   const bannerUrl = game.banner_url || game.bannerUrl || "/og-image.png";
   const imageUrl = game.image_url || game.imageUrl || "/og-image.png";
@@ -55,6 +68,14 @@ export default function GameCodesClient({ game, relatedGames }: GameCodesClientP
     navigator.clipboard.writeText(codeText);
     setCopiedCodeId(codeId);
     showToast(`Copied code "${codeText}" to clipboard!`);
+
+    // Track GA4 and internal analytics code_copy
+    trackCodeCopy({
+      game_id: String(game.id),
+      game_slug: game.slug,
+      code_id: codeId,
+    });
+
     setTimeout(() => {
       setCopiedCodeId(null);
     }, 2000);

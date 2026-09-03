@@ -169,7 +169,7 @@ export default function Logs() {
             ✕ Error
           </button>
           <button
-            onClick={() => fetchLogs(password)}
+            onClick={() => fetchLogs()}
             className="admin-btn-primary"
             disabled={refreshing}
             style={{ marginLeft: "auto" }}

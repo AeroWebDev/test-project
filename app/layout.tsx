@@ -80,22 +80,6 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${outfit.variable} ${inter.variable}`}>
       <head>
-        {/* Google Tag Manager / Analytics (Server-rendered into initial HTML on every page) */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-6ZY4Y6ZBW0"
-        />
-        <script
-          id="google-analytics"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-6ZY4Y6ZBW0');
-            `,
-          }}
-        />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322508130871793"

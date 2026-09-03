@@ -23,19 +23,19 @@ export async function POST(req: Request) {
             p_game_id: game_id,
             p_date: today,
             p_metric: "views",
-          }).catch(() => {});
+          });
         } else if (eventType === "code_copy") {
           await supabaseAdmin.rpc("increment_game_analytics", {
             p_game_id: game_id,
             p_date: today,
             p_metric: "code_copies",
-          }).catch(() => {});
+          });
         } else if (eventType === "discord_click") {
           await supabaseAdmin.rpc("increment_game_analytics", {
             p_game_id: game_id,
             p_date: today,
             p_metric: "discord_clicks",
-          }).catch(() => {});
+          });
         }
       } catch (dbErr) {
         // Analytics failure should never break or throw

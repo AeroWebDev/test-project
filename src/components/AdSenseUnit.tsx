@@ -9,7 +9,7 @@ declare global {
 }
 
 export default function AdSenseUnit() {
-  const adRef = useRef<HTMLElement>(null);
+  const adRef = useRef<HTMLModElement>(null);
   const initialized = useRef(false);
 
   useEffect(() => {

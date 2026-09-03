@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 
 declare global {
   interface Window {
@@ -9,19 +9,28 @@ declare global {
 }
 
 export default function AdSenseUnit() {
+  const hydrated = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
   const adRef = useRef<HTMLModElement>(null);
   const initialized = useRef(false);
 
   useEffect(() => {
     const ad = adRef.current;
 
-    if (!ad || initialized.current || ad.dataset.adsbygoogleStatus) {
+    if (!hydrated || !ad || initialized.current || ad.dataset.adStatus) {
       return;
     }
 
     initialized.current = true;
     (window.adsbygoogle = window.adsbygoogle || []).push({});
-  }, []);
+  }, [hydrated]);
+
+  if (!hydrated) {
+    return null;
+  }
 
   return (
     <ins

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
+import AdSense from "../src/components/AdSense";
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
 import { ToastProvider } from "../src/components/Toast";
@@ -80,17 +80,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${outfit.variable} ${inter.variable}`}>
+      <head>
+        <AdSense />
+      </head>
       <body>
         <ToastProvider>
           <Header />
           {children}
           <Footer />
         </ToastProvider>
-        <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322508130871793"
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-        />
       </body>
     </html>
   );

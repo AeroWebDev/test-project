@@ -4,15 +4,15 @@
 
 declare global {
   interface Window {
-    dataLayer?: any[];
-    gtag?: (...args: any[]) => void;
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
 /**
  * Safely send a Google Analytics 4 event
  */
-export function trackGAEvent(eventName: string, params?: Record<string, any>) {
+export function trackGAEvent(eventName: string, params?: Record<string, unknown>) {
   try {
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
       window.gtag("event", eventName, params);
@@ -26,7 +26,7 @@ export function trackGAEvent(eventName: string, params?: Record<string, any>) {
 /**
  * Send internal non-blocking beacon to RoBcodes analytics endpoint
  */
-async function trackInternalEvent(eventType: string, payload: Record<string, any>) {
+async function trackInternalEvent(eventType: string, payload: Record<string, unknown>) {
   try {
     if (typeof window === "undefined") return;
 

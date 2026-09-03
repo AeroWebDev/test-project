@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useToast } from "@/src/components/Toast";
 
@@ -125,9 +126,9 @@ export default function ContactPage() {
             >
               Send another message
             </button>
-            <a href="/" className="secondary-link">
+            <Link href="/" className="secondary-link">
               Back to homepage
-            </a>
+            </Link>
           </div>
         </div>
       ) : (

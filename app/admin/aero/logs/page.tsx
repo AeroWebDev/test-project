@@ -58,7 +58,7 @@ export default function Logs() {
         sessionStorage.setItem("admin_aero_name", data.adminName || "Aero Administrator");
         fetchLogs();
       }
-    } catch (err: any) {
+    } catch {
       setError("Network error");
     } finally {
       setLoading(false);

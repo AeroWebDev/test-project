@@ -3,8 +3,15 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FaLock, FaGamepad, FaKey, FaFileAlt, FaDashcube, FaCheck, FaTimes } from "react-icons/fa";
+import { FaLock, FaGamepad, FaKey, FaFileAlt, FaCheck, FaTimes } from "react-icons/fa";
 import AdminLayout from "@/src/components/AdminLayout";
+
+type DashboardStats = {
+  totalGames?: number;
+  totalCodes?: number;
+  activeCodes?: number;
+  expiredCodes?: number;
+};
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -13,7 +20,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [adminName, setAdminName] = useState("");
-  const [dashboardStats, setDashboardStats] = useState<any>(null);
+  const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(null);
 
   // Restore session from sessionStorage on load
   useEffect(() => {
@@ -67,7 +74,7 @@ export default function AdminDashboard() {
           sessionStorage.setItem("admin_aero_stats", JSON.stringify(data.dashboardStats));
         }
       }
-    } catch (err: any) {
+    } catch {
       setError("Network or server connection error");
     } finally {
       setLoading(false);
